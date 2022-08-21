@@ -71,7 +71,9 @@ class EmployeePayrollData {
         if(diff / (1000*60*60*24) > 30){
             throw "Start date is beyond 30 days";
         }
+        else{
         this._startDate = startDate;
+        }
     }
     
     toString() {
