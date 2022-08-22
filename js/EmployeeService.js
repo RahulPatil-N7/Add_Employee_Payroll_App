@@ -1,7 +1,9 @@
 window.addEventListener('DOMContentLoaded', (event) => {
     validName();
     salaryRange();
+    validStartDate();
 });
+
 function validName(){
     const name = document.querySelector('#name');
     const textError = document.querySelector('.text-error');
@@ -13,6 +15,29 @@ function validName(){
         try {
             let empData=new EmployeePayrollData();
             empData.name=name.value;
+            textError.textContent = "";
+        }
+        catch (e) {
+            textError.textContent = e;
+        }
+    });
+}
+
+function validStartDate(){
+    const startDate = document.querySelector('#startDate');
+    const textError = document.querySelector('.text-error');
+    startDate.addEventListener('select', function () {
+    let currentDate = new Date();
+    if(startDate > currentDate){
+        textError.textContent = "Start date is a future date";
+    }
+    var diff = Math.abs(currentDate.getTime() - startDate.getTime());
+    if(diff / (1000*60*60*24) > 30){
+        textError.textContent = "Start date is beyond 30 days";
+    }
+    try {
+            let empData=new EmployeePayrollData();
+            empData._startDate=startDate;
             textError.textContent = "";
         }
         catch (e) {
@@ -105,17 +130,19 @@ const resetForm = () =>{
     setValue('#month', 'January'); 
     setValue( '#year', '2022');
 }
-    //UC 5 - Reset the Employee Payroll Form
+
 const unsetSelectedValues = (propertyValue) => {
     let allItems = document.querySelectorall(propertyValue); 
     allItems.forEach(item => {
     item.checked = false; 
     }); 
 }
+
 const setTextValue = (id, value) => {
     const element = document.querySelector(id); 
     element.textContent = value;
 }
+
 const setValue = (id, value) => {
     const element = document.querySelector(id); 
     element.value = value;
