@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded', (event) => {
     validName();
     salaryRange();
-    validStartDate();
 });
 
 function validName(){
@@ -23,28 +22,7 @@ function validName(){
     });
 }
 
-function validStartDate(){
-    const startDate = document.querySelector('#startDate');
-    const textError = document.querySelector('.text-error');
-    startDate.addEventListener('select', function () {
-    let currentDate = new Date();
-    if(startDate > currentDate){
-        textError.textContent = "Start date is a future date";
-    }
-    var diff = Math.abs(currentDate.getTime() - startDate.getTime());
-    if(diff / (1000*60*60*24) > 30){
-        textError.textContent = "Start date is beyond 30 days";
-    }
-    try {
-            let empData=new EmployeePayrollData();
-            empData._startDate=startDate;
-            textError.textContent = "";
-        }
-        catch (e) {
-            textError.textContent = e;
-        }
-    });
-}
+
 /** set event listener on salary range*/
 function salaryRange(){
     const salary = document.querySelector('#salary');
